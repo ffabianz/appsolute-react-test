@@ -50,4 +50,4 @@ export default function FeedSearch() {
 }
 
 
-//TODO: change feed and feedsearch ClassNames. add filters, format articles, add router for search page with filter.
+//TODO: change feed and feedsearch ClassNames. add filters, format articles

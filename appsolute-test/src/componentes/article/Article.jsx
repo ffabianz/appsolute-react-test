@@ -1,4 +1,4 @@
-// import "./post.css";
+import "./article.css";
 
 export default function Article({ articleData}) {
     
@@ -13,22 +13,19 @@ export default function Article({ articleData}) {
     } = articleData;
 
   return ( <div className="postWrapper">
-  <div className="postCenter">
-    <div className="postMedia">
+    <div className="articleMedia">
       {urlToImage != null && (
-        <img className="postImg" src={urlToImage} alt="" />
+        <img className="articleImg" src={urlToImage} alt="" />
       )}
     </div>
-    <div className="postText">
-      <h6 className="postTitle">{title}</h6>
-      {content}
+    <div className="articleText">
+      <h6 className="articleTitle">{title}</h6>
+      {description}
     </div>
-    <div className="postDate">
+    <div className="articleDate">
       {author}
+      {publishedAt}
     </div>
-  </div>
-  <div className="postBottom">
-  </div>
 </div>
 );
 }
