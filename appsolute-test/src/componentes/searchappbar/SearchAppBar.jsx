@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import SearchContext from "../../context/SearchContext"
+import SearchContext from "../../context/SearchContext";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -7,8 +7,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import { useHistory } from "react-router-dom";
-import SearchIcon from "@mui/icons-material/Search";
-import { Button } from "@mui/material";
+import FilterSettings from "../filterSettings/FilterSettings";
+import { makeStyles } from '@mui/styles';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -42,12 +42,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const useStyles = makeStyles({
+  root: {
+      display:" inline-flex",
+  },
+});
+
 export default function SearchAppBar(props) {
+  const classes = useStyles();
   const ctx = useContext(SearchContext);
   const { children } = props;
   const history = useHistory();
   const [enteredValue, setEnteredValue] = useState("");
-  const [, setSearchValue] = ctx;
+  const [searchValue, setSearchValue] = ctx;
   const onChangeHandler = (event) => {
     setEnteredValue(event.target.value);
   };
@@ -55,7 +62,12 @@ export default function SearchAppBar(props) {
   const onKeyDownHandler = (event) => {
     if (event.key === "Enter" && enteredValue !== "") {
       console.log("enter pressed");
-      setSearchValue(enteredValue);
+      setSearchValue({
+        query: enteredValue,
+        language: searchValue.language,
+        sortBy: searchValue.sortBy,
+        searchIn: searchValue.searchIn,
+      });
       history.push("/search");
     }
   };
@@ -80,7 +92,9 @@ export default function SearchAppBar(props) {
                 placeholder="Search…"
                 inputProps={{ "aria-label": "search" }}
               />
-              <Button />
+              <div className={classes.root}>
+                <FilterSettings/>
+              </div>
             </Search>
           </Toolbar>
         </AppBar>

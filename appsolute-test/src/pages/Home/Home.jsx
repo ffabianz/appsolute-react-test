@@ -1,10 +1,9 @@
-import SearchAppBar from "../../componentes/searchappbar/SearchAppBar";
-import LeftBar from "../../componentes/leftbar/LeftBar";
+import Feed from "../../componentes/feed/Feed";
 
 export default function Home() {
   return (
     <>
-      <LeftBar />
+      <Feed/>
     </>
   );
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function useNewsApiSearch(query, pageNumber, language, sortBy ) {
+export default function useNewsApiSearch(query,language,sortBy,searchIn, pageNumber) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [news, setNews] = useState([]);
@@ -10,7 +10,7 @@ export default function useNewsApiSearch(query, pageNumber, language, sortBy ) {
 
   useEffect(() => {
     setNews([]);
-  }, [query]);
+  }, [query,language,sortBy,searchIn]);
 
   useEffect(() => {
     setLoading(true);
@@ -18,9 +18,12 @@ export default function useNewsApiSearch(query, pageNumber, language, sortBy ) {
     let cancel;
     axios({
       method: "GET",
-      // url: "https://newsapi.org/v2/everything",
+      url: "https://newsapi.org/v2/everything",
       params: {
         q: query,
+        language: language,
+        sortBy: sortBy,
+        searchIn: searchIn,
         page: pageNumber,
         apiKey: process.env.React_App_News_Api,
       },
@@ -36,10 +39,9 @@ export default function useNewsApiSearch(query, pageNumber, language, sortBy ) {
       .catch((e) => {
         if (axios.isCancel(e)) return;
         setError(true);
-        setLoading(false);
       });
     return () => cancel();
-  }, [query, pageNumber]);
+  }, [query,language,sortBy,searchIn, pageNumber]);
 
   return { loading, error, news, hasMore };
 }

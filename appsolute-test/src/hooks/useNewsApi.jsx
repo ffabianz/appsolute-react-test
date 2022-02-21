@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import fakaxios from "./fakaxios";
 
 export default function useNewsApiSearch(country, pageNumber) {
   const [loading, setLoading] = useState(true);
@@ -17,7 +16,7 @@ export default function useNewsApiSearch(country, pageNumber) {
     setLoading(true);
     setError(false);
     let cancel;
-    fakaxios({
+    axios({
       method: "GET",
       url: "https://newsapi.org/v2/top-headlines",
       params: {

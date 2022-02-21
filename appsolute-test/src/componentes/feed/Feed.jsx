@@ -1,43 +1,39 @@
-import { useState, useRef, useCallback } from "react";
-import useNewsApiSearch from "../../hooks/useNewsApiSearch";
+import { useState } from "react";
+import useNewsApi from "../../hooks/useNewsApi";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Article from "../article/Article";
 
-export default function Feed() {
-  const [query, setQuery] = useState("");
+export default function FeedSearch() {
+  const country = "fr";
   const [pageNumber, setPageNumber] = useState(1);
-  const { news, hasMore, loading, error } = useNewsApiSearch(query, pageNumber);
+  const {
+    news = [],
+    hasMore,
+    loading,
+    error,
+  } = useNewsApi(country, pageNumber);
 
-  const observer = useRef();
-  const lastNewElementRef = useCallback(
-    (node) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setPageNumber((prevPagNumber) => prevPagNumber + 1);
-        }
-      });
-      if (node) observer.current.observe();
-    },
-    [loading, hasMore]
-  );
-
-  const handleSearch = (e) => {
-    setQuery(e.target.value);
-    setPageNumber(1);
+  const fetchMoreData = () => {
+    setPageNumber(pageNumber + 1);
   };
 
   return (
     <>
-      <input type="text" value={query} onChange={handleSearch}></input>
-      {news.map((article, index) => {
-        if (news.length === index + 1) {
-          <div ref={lastNewElementRef} key={article}>
-            {article}
-          </div>;
-        } else {
-          return <div key={article}>{article}</div>;
+      <InfiniteScroll
+        dataLength={news.length}
+        next={fetchMoreData}
+        hasMore={hasMore}
+        loader={<h4>Loading...</h4>}
+        endMessage={
+          <p style={{ textAlign: "center" }}>
+            <b>Yay! You have seen it all</b>
+          </p>
         }
-      })}
+      >
+        {news.map((articleData, index) => {
+          return <Article key={index} articleData={articleData} />;
+        })}
+      </InfiniteScroll>
       <div>{loading && "Loading..."}</div>
       <div>{error && "Error..."}</div>
     </>

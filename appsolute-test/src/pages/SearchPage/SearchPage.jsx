@@ -1,13 +1,9 @@
-import React, { useContext } from "react";
-import SearchContext from "../../context/SearchContext";
+import FeedSearch from "../../componentes/feedSearch/FeedSearch";
 
 const SearchPage = () => {
-  const ctx = useContext(SearchContext);
-  const [searchValue] = ctx;
   return (
     <>
-      <div>banana</div>
-      {searchValue}
+      <FeedSearch/>
     </>
   );
 };
