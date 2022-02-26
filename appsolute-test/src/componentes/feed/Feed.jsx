@@ -2,6 +2,7 @@ import { useState } from "react";
 import useNewsApi from "../../hooks/useNewsApi";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Article from "../article/Article";
+import { Grid } from "@mui/material";
 
 export default function FeedSearch() {
   const country = "fr";
@@ -31,7 +32,11 @@ export default function FeedSearch() {
         }
       >
         {news.map((articleData, index) => {
-          return <Article key={index} articleData={articleData} />;
+          return (
+            <Grid key={index} item xs={12}>
+              <Article articleData={articleData} />
+            </Grid>
+          );
         })}
       </InfiniteScroll>
       <div>{loading && "Loading..."}</div>

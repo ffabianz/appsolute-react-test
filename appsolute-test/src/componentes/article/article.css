@@ -1,4 +1,36 @@
-.articleImg{
-    width: 20%;
-    height: auto;
+.articleWrapper {
+  display: flex;
+  padding-bottom: 25px;
+  padding-top: 25px;
+}
+.mediaWrapper {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.postImg {
+  width: 400px;
+  height: auto;
+  padding-right: 30px;
+}
+
+.title {
+  color: #283269;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.fullName {
+  color: #283269;
+}
+
+.authorWrapper {
+  width: 160px;
+  border-top: 1px solid #e9eaf0;
+}
+
+.content {
+  color: #7e84a5;
+  max-height: 60px;
+  font-size: 14px;
 }

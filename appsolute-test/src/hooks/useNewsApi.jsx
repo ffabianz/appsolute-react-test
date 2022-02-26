@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+
 export default function useNewsApiSearch(country, pageNumber) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
